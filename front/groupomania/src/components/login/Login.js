@@ -33,7 +33,7 @@ function Login(props){
                 <div className="col-md-4 mt-4">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-group">
-                            <label htmlFor="exampleInputEmail">Email address</label>
+                            <label htmlFor="exampleInputEmail">Adresse mail</label>
                             <input type="email" className="form-control" id="email" placeholder="Enter email" {...register("email", { required: true })} ></input>
                             <small id="emailHelp" className="form-text text-muted">champs requis</small>
                         </div>

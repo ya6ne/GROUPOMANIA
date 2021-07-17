@@ -1,42 +1,32 @@
 import './profil.css';
-import sm from '../../assets/sm.png';
 import {useForm} from 'react-hook-form';
 import axios from 'axios';
 import {useState} from 'react';
+import Deleteprofil from './Deleteprofil';
 
 function Editprofil(props){
     let firstname = localStorage.getItem("firstname");
     let userPhoto = localStorage.getItem("userPhoto");
     let lastname = localStorage.getItem("lastname");
+    let mytoken = localStorage.getItem('token');
     
     const { register, handleSubmit } = useForm();
     const [error,setError] = useState();
-    
-    
+
     const onSubmit = user => {
-        console.log(user.userPhoto[0])
+
         const userPhoto = new FormData();
         userPhoto.append('userPhoto', user.userPhoto[0])
         userPhoto.append('user', JSON.stringify(user))
-        axios({
-            method: 'post',
-            url: 'http://localhost:3000/api/auth/signup',
-            data: userPhoto,
-            Headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-          })
-        .then(res => {
-            console.log(res);
-            alert('Félicitation, votre compte a été créé, vous pouvez vous identifier');
-            props.history.push('/login')
-   
-        })
-        .catch(err => {
-            console.log(err);
-            setError(err.response.data.error);
-        })
-        
+
+        axios.put("http://localhost:3000/api/auth/edituser", userPhoto ,{
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${mytoken}`
+                }})
+            .then(res2 => { props.history.push('/welcome')})
+            .catch(err2 => console.log(err2))
+
     }
 
 
@@ -44,7 +34,7 @@ function Editprofil(props){
         <div>
             <div className="container mt-5">
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-6 mb-5">
                         <h5>Modification de vos données</h5>
                             <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="form-group">
@@ -77,22 +67,7 @@ function Editprofil(props){
                         </form>
                     </div>
                     <div className="col-md-6">
-                        <h5>Supprimer le compte</h5>
-                        <p>Attention cette action est irréversible</p>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="form-group">
-                            <label htmlFor="exampleInputEmail">Email address</label>
-                            <input type="email" className="form-control" id="email" placeholder="Enter email" {...register("email", { required: true })} ></input>
-                            <small id="emailHelp" className="form-text text-muted">champs requis</small>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="exampleInputPassword">Mot de passe</label>
-                            <input type="password" className="form-control" id="password" placeholder="Password" {...register("password", { required: true })}></input>
-                            <small id="emailHelp" className="form-text text-muted">minimum 8 caractères avec au moins 1 majuscule 1 minuscule 1 caractère.</small>
-                        </div>
-                        <div style={{color: "red",fontFamily: "Arial"}}>{error && error}</div>
-                        <button type="submit" className="btn btn-danger mt-2 mb-3">Supprimer mon compte</button>
-                    </form>
+                        <Deleteprofil props={props}/>
                     </div>
                 </div>
             </div>

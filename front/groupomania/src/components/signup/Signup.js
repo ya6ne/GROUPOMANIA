@@ -7,7 +7,6 @@ function Signup(props){
     const { register, handleSubmit } = useForm();
     const [error,setError] = useState();
     
-    
     const onSubmit = user => {
         console.log(user.userPhoto[0])
         const userPhoto = new FormData();
@@ -51,7 +50,7 @@ function Signup(props){
                             <small id="emailHelp" className="form-text text-muted">champs requis</small>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="email">Email address</label>
+                            <label htmlFor="email">Adresse mail</label>
                             <input type="email" className="form-control" id="email" {...register("email", { required: true })}  placeholder="Enter email"></input>
                             <small id="emailHelp" className="form-text text-muted">champs requis</small>
                         </div>
