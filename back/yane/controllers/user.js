@@ -130,10 +130,75 @@ exports.signup = (req, res, next) => {
     .catch(e => res.status(500).json({e}))
   }
 
-/*   exports.editAccount = (req, res, next) => {
+  exports.editAccount = (req, res, next) => {
+    /* ****************************************************** */
+    if(!user.email){
+      return res.status(400).json({ 'error': 'Attention: veuillez renseigner votre email' });
+    }
+    if(!user.password){
+      return res.status(400).json({ 'error': 'Attention: veuillez renseigner un mot de passe valable' });
+    }
+    if(!user.firstname){
+      return res.status(400).json({ 'error': 'Attention: veuillez renseigner votre prénom' });
+    }
+    if(!user.lastname){
+      return res.status(400).json({ 'error': 'Attention: veuillez renseigner votre nom' });
+    }
+    if(!reg.xmail.test(user.email)){
+      return res.status(400).json({ 'error': 'Attention: format email non valide' });
+    }
+    if(!reg.xnames.test(user.lastname)){
+      return res.status(400).json({ 'error': 'Attention: votre nom ne doit pas contenir de caractères spéciaux ni de chiffres' });
+    }
+    if(!reg.xnames.test(user.firstname)){
+      return res.status(400).json({ 'error': 'Attention: votre prénom ne doit pas contenir de caractères spéciaux ni de chiffres' });
+    }
+    if(!reg.xpw.test(user.password)){
+      return res.status(400).json({ 'error': 'Attention: le mot de passe doit être de 8 caractères minimum et doit contenir au moins 1 majuscule 1 minuscule 1 chiffre 1 caractère spécial' });
+    }
+  /* ****************************************************** */
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, "secret_key"); 
+    const Id = decodedToken.userId;
+    console.log(Id)
+    const user = JSON.parse(req.body.user);
+    
+    bcrypt.hash(user.password, 10)
+    .then( hash => {
+  /* ****************************************************** */
+    if(req.file){
+      db.User.update({
+        isAdmin: 0,
+        ...user,
+        password: hash,
+        userPhoto:`${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+      },
+      {where: {id:Id}})
+      .then(user => res.status(201).json("Votre profil a été modifié"))
+      .catch(e => res.status(500).json("veuillez remplir tous les champs!"))
+    } 
+  /* ****************************************************** */
+    else if (!req.file){
+      db.User.update({
+        isAdmin: 0,
+        ...user,
+        password: hash,
+        userPhoto:`http://localhost:3000/images/random-user.png1626109420426.png`
+      },
+      {where: {id:Id}})
+      .then(user => res.status(201).json("Votre profil a été modifié"))
+      .catch(e => res.status(500).json("veuillez remplir tous les champs!"))
+    }
+  /* ****************************************************** */
+
+  })
+  .catch(error => res.status(500).json(error))
+    
+    
+
 
   }
- */
+ 
 
 
 
