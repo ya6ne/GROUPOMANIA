@@ -62,8 +62,7 @@ exports.signup = (req, res, next) => {
 
   })
   .catch(error => res.status(500).json(error))
-      
-  };
+};
 
   
 
@@ -108,6 +107,7 @@ exports.signup = (req, res, next) => {
 
 
   exports.deleteAccount = (req, res, next) => {
+  /* ****************************************************** */
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, "secret_key"); 
     const Id = decodedToken.userId; 
@@ -131,6 +131,7 @@ exports.signup = (req, res, next) => {
   }
 
   exports.editAccount = (req, res, next) => {
+    const user = JSON.parse(req.body.user);
     /* ****************************************************** */
     if(!user.email){
       return res.status(400).json({ 'error': 'Attention: veuillez renseigner votre email' });
@@ -160,8 +161,7 @@ exports.signup = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, "secret_key"); 
     const Id = decodedToken.userId;
-    console.log(Id)
-    const user = JSON.parse(req.body.user);
+    
     
     bcrypt.hash(user.password, 10)
     .then( hash => {
@@ -193,11 +193,7 @@ exports.signup = (req, res, next) => {
 
   })
   .catch(error => res.status(500).json(error))
-    
-    
-
-
-  }
+}
  
 
 

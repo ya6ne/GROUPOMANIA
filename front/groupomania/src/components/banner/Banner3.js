@@ -9,7 +9,7 @@ function Banner3() {
         <div className="navbar-light bg-light">
             <div className='container'>
             <nav className="navbar navbar-expand-lg ">
-                <Link className="navbar-brand" to="/signup">
+                <Link className="navbar-brand" to="/welcome">
                     <img src={logo} width="60" height="60" alt="logo de groupomania"></img><span style={{color:'#EE2E05',fontWeight:'bold'}}>Groupomania</span>
                 </Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

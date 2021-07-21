@@ -24,7 +24,7 @@ exports.getAllPosts = (req, res, next) => {
     db.Post.findAll({
         include: [{
             model: db.User,
-            attributes : ['firstname','lastname','isAdmin','userPhoto']
+            attributes : ['firstname','lastname','isAdmin','userPhoto','email','id']
         }]
     })
     .then(post => res.status(201).json(post))
@@ -32,14 +32,17 @@ exports.getAllPosts = (req, res, next) => {
 }
 
 exports.deletePost = (req, res, next) => {
-    db.Post.destroy({where : {id:9}})
+    let postid = req.body.postId
+    db.Post.destroy({where : {id:postid}})
     .then(e => res.status(201).json("le post a été supprimé"))
     .catch(e => res.status(500).json("impossible de supprimer de post"))
 }
 
-exports.updatePost = (req, res, next) => {
-    db.post.update({})
+/* exports.updatePost = (req, res, next) => {
+    db.post.update({
+
+    })
     .then(post => res.status(201).json("votre post a été modifié"))
     .catch(e => res.status(500).json("impossible de modifier ce post"))
 }
-
+ */

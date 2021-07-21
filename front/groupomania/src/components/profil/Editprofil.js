@@ -14,6 +14,7 @@ function Editprofil(props){
     const [error,setError] = useState();
 
     const onSubmit = user => {
+        console.log(user.lastname)
 
         const userPhoto = new FormData();
         userPhoto.append('userPhoto', user.userPhoto[0])
@@ -24,7 +25,11 @@ function Editprofil(props){
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${mytoken}`
                 }})
-            .then(res2 => { props.history.push('/welcome')})
+            .then(res2 => {
+                localStorage.setItem("firstname", user.firstname);
+                localStorage.setItem("lastname", user.lastname);
+                localStorage.setItem("userPhoto",user.userPhoto);
+                props.history.push('/welcome')})
             .catch(err2 => console.log(err2))
 
     }
@@ -39,22 +44,22 @@ function Editprofil(props){
                             <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="form-group">
                                 <label htmlFor="name">Nom</label>
-                                <input type="text" className="form-control" id="name" {...register("lastname", { required: true })}  placeholder={lastname}></input>
+                                <input type="text" className="form-control" id="name1" {...register("lastname", { required: true })}  placeholder={lastname}></input>
                                 <small id="emailHelp" className="form-text text-muted">champs requis</small>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="lastname">Prénom</label>
-                                <input type="text" className="form-control" id="lastname" {...register("firstname", { required: true })}  placeholder={firstname}></input>
+                                <input type="text" className="form-control" id="lastname1" {...register("firstname", { required: true })}  placeholder={firstname}></input>
                                 <small id="emailHelp" className="form-text text-muted">champs requis</small>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="email">Email</label>
-                                <input type="email" className="form-control" id="email" {...register("email", { required: true })}  placeholder="*****@*******"></input>
+                                <input type="email" className="form-control" id="email1" {...register("email", { required: true })}  placeholder="*****@*******"></input>
                                 <small id="emailHelp" className="form-text text-muted">champs requis</small>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="password">Mot de passe</label>
-                                <input type="password" className="form-control" id="password" {...register("password", { required: true })} placeholder="********"></input>
+                                <input type="password" className="form-control" id="password1" {...register("password", { required: true })} placeholder="********"></input>
                                 <small id="emailHelp" className="form-text text-muted">minimum 8 caractères avec au moins 1 majuscule 1 minuscule 1 caractère.</small>
                             </div>
                             <div className="mb-3">

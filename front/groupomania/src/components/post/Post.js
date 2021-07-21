@@ -1,7 +1,7 @@
 import {useForm} from 'react-hook-form';
 import axios from 'axios';
 
-function Post() {
+function Post(props) {
     const { register, handleSubmit } = useForm();
     let mytoken = localStorage.getItem('token');
  const config = {
@@ -17,7 +17,7 @@ function Post() {
         myPost.append("post", JSON.stringify(post))
         console.log(post)
         axios.post("http://localhost:3000/api/posts/", myPost, config)
-        .then(res => console.log(res))
+        .then(res => props.history.push('/welcome'))
         .catch(err => console.log(err))
         
     }
@@ -26,7 +26,7 @@ function Post() {
 
     return (
         <div className="container">
-            <h3 className="mt-5">Ajouter un</h3>
+            <h3 className="mt-5">Ajouter un article</h3>
             <div className="row">
                 <div className="col-md-6">
                     <form onSubmit={handleSubmit(onSubmit)}>

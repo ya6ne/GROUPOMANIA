@@ -17,6 +17,7 @@ function Login(props){
             localStorage.setItem("firstname", res.data.user.firstname);
             localStorage.setItem("lastname", res.data.user.lastname);
             localStorage.setItem("userPhoto", res.data.user.userPhoto);
+            localStorage.setItem("id", res.data.user.id);
                
             props.history.push('/welcome')
         })

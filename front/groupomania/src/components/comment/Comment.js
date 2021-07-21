@@ -6,10 +6,11 @@ import './comment.css'
 import moment from 'moment'
 
 
+
 function Comment({postId}){
     const [isOpen, setIsOpen] = useState(false);
     const [coms, setComs] = useState();
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, reset} = useForm();
     let mytoken = localStorage.getItem('token');
     const config = {
            headers: {'Authorization': `Bearer ${mytoken}` }
@@ -17,7 +18,7 @@ function Comment({postId}){
     const onSubmit = coms => {
         coms.PostId = postId
         axios.post("http://localhost:3000/api/coms/", coms, config)
-        .then(res => console.log(res))
+        .then(res => {reset()})
         .catch(err => console.log(err))
     }
     useEffect(() => {
@@ -27,17 +28,20 @@ function Comment({postId}){
             }
         })
         .then(data => {
-            setComs(data.data)
+            setComs(data.data);
+            
+            
+            
         })
         .catch(e => console.log(e))
-    }, [])
-    console.log(moment().format('YYYY-MM-D h:mm:ss'))
-
+    }, [coms])
+    
+    
     return (
         
         
         <div>
-            <button onClick={isOpen ? () => setIsOpen(false) : () => setIsOpen(true)} class="btn btn-primary mr-2 mt-2">Commenter</button>
+            <button onClick={isOpen ? () => setIsOpen(false) : () => setIsOpen(true)} class="btn btn-primary mr-2 mt-2">Commenter </button>
         {   
             isOpen ? 
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -52,11 +56,11 @@ function Comment({postId}){
                                     </div>):false}
                                 </div>
                             ))
-                        } 
+                        }
                     </span>
                     <div className="form-group">
                         <label htmlFor="comment"></label>
-                        <textarea type="text" className="form-control" {...register("content", { required: true })} id="comment" placeholder="Votre commentaire..."></textarea>
+                        <textarea type="text"  className="form-control" {...register("content", { required: true })} id="comment" placeholder="Votre commentaire..."></textarea>
                         <small id="emailHelp" className="form-text text-muted">champs requis</small>
                         <button type="submit" className="btn btn-primary mt-3">Poster</button>
                     </div>
