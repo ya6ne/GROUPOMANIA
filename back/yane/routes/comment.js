@@ -5,5 +5,6 @@ const auth =  require('../middleware/auth');
 
 router.post('/',auth, comsCtrl.createComs);
 router.get('/',auth, comsCtrl.getAllComs);
+router.delete('/',comsCtrl.deleteCom)
 
 module.exports = router;

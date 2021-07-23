@@ -12,7 +12,7 @@ exports.createComs = (req, res, next) => {
         ...req.body,
         UserId:Id   
     })
-    .then(post => res.status(201).json("commentaire créé"))
+    .then(coms => res.status(201).json("commentaire créé"))
     .catch(e => res.status(500).json(e))
 }
 
@@ -20,11 +20,19 @@ exports.getAllComs = (req, res, next) => {
     db.Comment.findAll({
         include: [{
             model: db.User,
-            attributes : ['firstname','lastname']
+            attributes : ['id','firstname','lastname']
         }]
     })
-    .then(post => res.status(201).json(post))
+    .then(coms => res.status(201).json(coms))
     .catch(e => res.status(500).json(e))
+}
+
+exports.deleteCom = (req, res, next) => {
+    let comId = req.body.id
+    console.log(comId)
+    db.Comment.destroy({where : {id:comId}})
+    .then(coms => res.status(201).json("le commentaire a été supprimé"))
+    .catch(e => res.status(500).json("impossible de supprimer le commentaire"))
 }
 
 

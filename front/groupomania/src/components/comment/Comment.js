@@ -3,24 +3,32 @@ import {useForm} from 'react-hook-form';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
 import './comment.css'
-import moment from 'moment'
-
+import Delcom from './Delcom';
 
 
 function Comment({postId}){
     const [isOpen, setIsOpen] = useState(false);
     const [coms, setComs] = useState();
     const { register, handleSubmit, reset} = useForm();
+
     let mytoken = localStorage.getItem('token');
+    let id = localStorage.getItem('id')
     const config = {
            headers: {'Authorization': `Bearer ${mytoken}` }
        };
     const onSubmit = coms => {
         coms.PostId = postId
         axios.post("http://localhost:3000/api/coms/", coms, config)
-        .then(res => {reset()})
+        .then(res => {reset()}) /* effacer le contenue du form */
         .catch(err => console.log(err))
+        
+        
+        
     }
+    
+    let numbofcoms = []
+    coms && numbofcoms.push(coms.filter(x => x.postId === postId).length)
+    
     useEffect(() => {
         axios.get("http://localhost:3000/api/coms/", {
             headers:{
@@ -31,17 +39,19 @@ function Comment({postId}){
             setComs(data.data);
             
             
-            
         })
         .catch(e => console.log(e))
-    }, [coms])
+    }, [])
+
     
     
+
+
     return (
         
         
         <div>
-            <button onClick={isOpen ? () => setIsOpen(false) : () => setIsOpen(true)} class="btn btn-primary mr-2 mt-2">Commenter </button>
+            <button onClick={isOpen ? () => setIsOpen(false) : () => setIsOpen(true)} class="btn btn-primary mr-2 mt-2">Commenter ({numbofcoms}) </button>
         {   
             isOpen ? 
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -49,7 +59,9 @@ function Comment({postId}){
                         {
                             coms && coms.map(x => (
                                 <div key={x.id}>
-                                    {postId == x.postId ? (<div className="comment"><h6 className="auth">{x.User.firstname + ' '+ x.User.lastname +' ' + ':'}</h6>
+                                    {postId == x.postId ? (<div className="comment">
+                                    {id == x.userId ? <div className="date"><Delcom comId={x.id} /></div> : false}
+                                        <h6 className="auth">{x.User.firstname + ' '+ x.User.lastname +' ' + ':'}</h6>
                                     <p>{x.content} <br></br>
                                     <span className="date">posté le {x.createdAt.split('T')[0].split('.')[0]} à {x.createdAt.split('T')[1].split('.')[0]}</span>
                                     </p>

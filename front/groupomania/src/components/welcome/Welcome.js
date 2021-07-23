@@ -18,6 +18,7 @@ function Welcome(props) {
         })
         .then(data => {
             setItem(data.data);
+            console.log(item[0].User.id)
         })
         .catch(e => console.log(e))
     }, [])
