@@ -53,7 +53,7 @@ exports.signup = (req, res, next) => {
         isAdmin: 0,
         ...user,
         password: hash,
-        userPhoto:`http://localhost:3000/images/random-user.png1626109420426.png`
+        userPhoto:`http://localhost:3000/images/random-user.png`
       })
       .then(user => res.status(201).json(user))
       .catch(e => res.status(500).json("veuillez remplir tous les champs!"))

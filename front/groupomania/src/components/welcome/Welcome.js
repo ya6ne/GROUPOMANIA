@@ -18,7 +18,6 @@ function Welcome(props) {
         })
         .then(data => {
             setItem(data.data);
-            console.log(item[0].User.id)
         })
         .catch(e => console.log(e))
     }, [])
@@ -34,7 +33,7 @@ function Welcome(props) {
                 item.map( x => (
                     
                 <div key={x.id}>
-                    <div class="card mt-3" >
+                    <div className="card mt-3" >
                         <div className="card-body"> 
                             <h6 className="card-title" style={{color:"#ee2e05"}}>{x.title} </h6>
                             <p className="card-text">{x.content}.</p>
