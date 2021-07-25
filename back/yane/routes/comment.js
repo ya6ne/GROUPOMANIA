@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const comsCtrl = require('../controllers/comment');
-const auth =  require('../middleware/auth');
+const comAuth = require('../middleware/editAuthCom');
+const auth = require('../middleware/auth');
 
 router.post('/',auth, comsCtrl.createComs);
 router.get('/',auth, comsCtrl.getAllComs);
-router.delete('/',comsCtrl.deleteCom)
+router.delete('/',comAuth,comsCtrl.deleteCom)
 
 module.exports = router;

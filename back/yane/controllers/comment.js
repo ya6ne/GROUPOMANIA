@@ -1,11 +1,16 @@
 var db = require('../models');
 const jwt = require('jsonwebtoken');
+var reg = require('../regex');
 
 exports.createComs = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, "secret_key"); 
     const Id = decodedToken.userId;
-    console.log(req.body)
+    console.log(req.body.content);
+    if(!reg.xtxt.test(req.body.content)){
+        return res.status(400).json({ 'error': 'CHAMPS INVALIDE' });
+    }
+
     
     
     db.Comment.create({

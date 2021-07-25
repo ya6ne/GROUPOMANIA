@@ -1,7 +1,7 @@
 var db = require('../models');
 var reg = require('../regex');
 const jwt = require('jsonwebtoken');
-
+const fs = require('fs');
 
 
 exports.createPost = (req, res, next) => {
@@ -10,14 +10,31 @@ exports.createPost = (req, res, next) => {
     const Id = decodedToken.userId; 
     const post = JSON.parse(req.body.post);
     console.log(post , Id)
-    
-    db.Post.create({
-        ...post,
-        UserId:Id,
-        attachement:`${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-    })
-    .then(post => res.status(201).json("objet crée"))
-    .catch(e => res.status(500).json(e))
+    if(!reg.xtxt.test(post.title)){
+        return res.status(400).json({ 'error': 'CHAMPS INVALIDE' });
+    }
+    if(!reg.xtxt.test(post.content)){
+        return res.status(400).json({ 'error': 'CHAMPS INVALIDE' });
+    }
+
+    if(req.file){
+        db.Post.create({
+            ...post,
+            UserId:Id,
+            attachement:`${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+        })
+        .then(post => res.status(201).json("objet crée"))
+        .catch(e => res.status(500).json(e))
+    }
+    else if(!req.file){
+        db.Post.create({
+            ...post,
+            UserId:Id,
+            attachement:`${req.protocol}://${req.get("host")}/images/pt.jpg`
+        })
+        .then(post => res.status(201).json("objet crée"))
+        .catch(e => res.status(500).json(e))
+    }
 }
 
 exports.getAllPosts = (req, res, next) => {
@@ -33,16 +50,20 @@ exports.getAllPosts = (req, res, next) => {
 
 exports.deletePost = (req, res, next) => {
     let postid = req.body.postId
-    db.Post.destroy({where : {id:postid}})
-    .then(e => res.status(201).json("le post a été supprimé"))
-    .catch(e => res.status(500).json("impossible de supprimer de post"))
-}
-
-/* exports.updatePost = (req, res, next) => {
-    db.post.update({
-
+    db.Post.findOne({where : {id:postid}})
+    .then(post => {
+        const filename = post.attachement.split('/images/')[1];
+        fs.unlink(`images/${filename}`, () => {
+            db.Post.destroy({where : {id:postid}})
+            .then(post => {
+                if(post){
+                  return  res.status(201).json("post supprimé")
+              } else {
+                return res.status(404).json("post non trouvé")
+              }})
+            .catch(e => res.status(500).json("impossible de supprimer le post"))
+        })
     })
-    .then(post => res.status(201).json("votre post a été modifié"))
-    .catch(e => res.status(500).json("impossible de modifier ce post"))
+    .catch(e => res.status(500).json({e}))
 }
- */
+

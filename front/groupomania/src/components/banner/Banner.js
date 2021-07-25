@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 
 function Banner() {
     return (
-        <div class="navbar-light bg-light">
+        <div className="navbar-light bg-light">
             <div className='container'>
             <nav className="navbar navbar-expand-lg ">
                 <Link className="navbar-brand" to="/signup">

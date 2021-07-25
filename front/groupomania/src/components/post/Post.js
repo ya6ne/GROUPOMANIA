@@ -1,8 +1,10 @@
 import {useForm} from 'react-hook-form';
 import axios from 'axios';
+import {useState} from 'react';
 
 function Post(props) {
     const { register, handleSubmit } = useForm();
+    const [error,setError] = useState();
     let mytoken = localStorage.getItem('token');
  const config = {
         headers: {'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${mytoken}` }
@@ -18,7 +20,10 @@ function Post(props) {
         console.log(post)
         axios.post("http://localhost:3000/api/posts/", myPost, config)
         .then(res => props.history.push('/welcome'))
-        .catch(err => console.log(err))
+        .catch(err => {
+            console.log(err.response.data.error);
+            setError(err.response.data.error);
+        })
         
     }
 
@@ -44,6 +49,7 @@ function Post(props) {
                             <label htmlFor="formFile" className="form-label" >Telecharger une photo</label>
                             <input className="form-control" type="file" {...register("attachement", { required: false })} id="formFile"></input>
                         </div>
+                        <div style={{color: "red",fontFamily: "Arial"}}>{error && error}</div>
                         <button type="submit" className="btn btn-primary mt-3">Poster</button>
                     </form>
                 </div>
