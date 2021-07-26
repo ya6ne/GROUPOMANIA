@@ -96,7 +96,7 @@ exports.signup = (req, res, next) => {
           user,
           token: jwt.sign(
             {userId: user.id},
-            "secret_key",
+            process.env.TOKEN,
             {expiresIn: '1h'})
         })
       })
@@ -109,7 +109,7 @@ exports.signup = (req, res, next) => {
   exports.deleteAccount = (req, res, next) => {
   /* ****************************************************** */
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, "secret_key"); 
+    const decodedToken = jwt.verify(token, process.env.TOKEN); 
     const Id = decodedToken.userId; 
     db.User.findOne({where : { id: Id}})
     .then( user => {
@@ -159,7 +159,7 @@ exports.signup = (req, res, next) => {
     }
   /* ****************************************************** */
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, "secret_key"); 
+    const decodedToken = jwt.verify(token, process.env.TOKEN); 
     const Id = decodedToken.userId;
     
     

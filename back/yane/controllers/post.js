@@ -6,7 +6,7 @@ const fs = require('fs');
 
 exports.createPost = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, "secret_key"); 
+    const decodedToken = jwt.verify(token, process.env.TOKEN); 
     const Id = decodedToken.userId; 
     const post = JSON.parse(req.body.post);
     console.log(post , Id)
