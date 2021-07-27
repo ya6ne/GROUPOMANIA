@@ -14,7 +14,7 @@ function Signup(props){
         userPhoto.append('user', JSON.stringify(user))
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api/auth/signup',
+            url: process.env.REACT_APP_SIGNUP,
             data: userPhoto,
             Headers: {
                 'Content-Type': 'multipart/form-data'
@@ -78,10 +78,3 @@ function Signup(props){
 }
 
 export default Signup;
-
-
-/* axios.post("http://localhost:3000/api/auth/signup",userPhoto, {
-                headers: {
-                    'Content-Type': 'application/json' || 'multipart/form-data'
-                  }
-            }) */

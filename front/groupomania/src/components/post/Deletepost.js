@@ -9,7 +9,7 @@ function Deletepost({postId}) {
     };
     const post = () => {
         console.log(postId)
-        axios.delete("http://localhost:3000/api/posts/",{ data:{postId} ,headers: {'Authorization': `Bearer ${mytoken}` }})
+        axios.delete(process.env.REACT_APP_POSTS,{ data:{postId} ,headers: {'Authorization': `Bearer ${mytoken}` }})
             .then(data =>  {window.location.reload()})
             .catch(e => { console.log(e)}) 
     }

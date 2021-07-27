@@ -7,7 +7,7 @@ function Delcom({comId}){
         headers: {'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${mytoken}` }
     };
     const delCom = () => {
-        axios.delete("http://localhost:3000/api/coms/" ,{data: {id:comId}, headers: {'Authorization': `Bearer ${mytoken}` } })
+        axios.delete(process.env.REACT_APP_COMMENTS,{data: {id:comId}, headers: {'Authorization': `Bearer ${mytoken}` } })
             .then(data =>  {console.log(data)})
             .catch(e => { console.log(e)})
         }

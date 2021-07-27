@@ -11,7 +11,7 @@ function Welcome(props) {
     let id = localStorage.getItem('id');
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/posts/", {
+        axios.get(process.env.REACT_APP_POSTS, {
             headers:{
                 'Authorization': `Bearer ${mytoken}`
             }

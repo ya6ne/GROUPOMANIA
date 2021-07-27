@@ -18,7 +18,7 @@ function Comment({postId}){
        };
     const onSubmit = coms => {
         coms.PostId = postId
-        axios.post("http://localhost:3000/api/coms/", coms, config)
+        axios.post(process.env.REACT_APP_COMMENTS, coms, config)
         .then(res => {reset()}) /* effacer le contenue du form */
         .catch(err => console.log(err))
         
@@ -30,7 +30,7 @@ function Comment({postId}){
     coms && numbofcoms.push(coms.filter(x => x.postId === postId).length)
     
     useEffect(() => {
-        axios.get("http://localhost:3000/api/coms/", {
+        axios.get(process.env.REACT_APP_COMMENTS, {
             headers:{
                 'Authorization': `Bearer ${mytoken}`
             }

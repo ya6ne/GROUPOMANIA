@@ -9,9 +9,9 @@ function Deleteprofil({props}){
     const [error,setError] = useState();
 
     const onSubmit = user => {
-        axios.post("http://localhost:3000/api/auth/login", user)
+        axios.post(process.env.REACT_APP_LOGIN, user)
         .then(res => {
-            axios.delete("http://localhost:3000/api/auth/deleteuser", {
+            axios.delete(process.env.REACT_APP_DELETEPROFIL, {
                 headers: {
                     'Authorization': `Bearer ${mytoken}` 
                 }})

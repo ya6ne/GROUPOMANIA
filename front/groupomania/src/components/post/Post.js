@@ -18,7 +18,7 @@ function Post(props) {
         myPost.append("attachement", post.attachement[0]);
         myPost.append("post", JSON.stringify(post))
         console.log(post)
-        axios.post("http://localhost:3000/api/posts/", myPost, config)
+        axios.post(process.env.REACT_APP_POSTS, myPost, config)
         .then(res => props.history.push('/welcome'))
         .catch(err => {
             console.log(err.response.data.error);
