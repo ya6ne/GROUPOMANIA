@@ -10,7 +10,7 @@ function Login(props){
     const [error,setError] = useState();
     const onSubmit = user => {
         console.log(user);
-        axios.post("http://localhost:3000/api/auth/login", user)
+        axios.post(process.env.REACT_APP_LOGIN, user)
         .then(res => {
             console.log(res)
             localStorage.setItem("token", res.data.token);
@@ -25,6 +25,7 @@ function Login(props){
             console.log(err.response.data.error);
             setError(err.response.data.error);
         })
+        
         
     }
     return (

@@ -4,7 +4,7 @@ var reg = require('../regex');
 
 exports.createComs = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, "secret_key"); 
+    const decodedToken = jwt.verify(token, process.env.TOKEN); 
     const Id = decodedToken.userId;
     console.log(req.body.content);
     if(!reg.xtxt.test(req.body.content)){

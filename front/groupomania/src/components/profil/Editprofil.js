@@ -20,7 +20,7 @@ function Editprofil(props){
         userPhoto.append('userPhoto', user.userPhoto[0])
         userPhoto.append('user', JSON.stringify(user))
 
-        axios.put("http://localhost:3000/api/auth/edituser", userPhoto ,{
+        axios.put(process.env.REACT_APP_EDITPROFIL, userPhoto ,{
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${mytoken}`
