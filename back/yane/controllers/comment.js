@@ -15,7 +15,6 @@ exports.createComs = (req, res, next) => {
         UserId:Id   
     })
     .then(coms => {
-        console.log("11111", coms)
         db.Comment.findOne({ where : {id:coms.dataValues.id},
             include: [{
                 model: db.User,

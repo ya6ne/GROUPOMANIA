@@ -16,9 +16,6 @@ function Deletepost({postId, delItem , updateDelitem}) {
         .then(data =>  {updateDelitem(delItem + 1)})
         .catch(e => {console.log(e)}) 
     }
-    
-
-
 
     return (
         <div>
