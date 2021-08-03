@@ -10,14 +10,20 @@ exports.createComs = (req, res, next) => {
     if(!reg.xtxt.test(req.body.content)){
         return res.status(400).json({ 'error': 'CHAMPS INVALIDE' });
     }
-
-    
-    
     db.Comment.create({
         ...req.body,
         UserId:Id   
     })
-    .then(coms => res.status(201).json("commentaire créé"))
+    .then(coms => {
+        console.log("11111", coms)
+        db.Comment.findOne({ where : {id:coms.dataValues.id},
+            include: [{
+                model: db.User,
+                attributes : ['id','firstname','lastname']
+            }]
+        }).then(com =>  res.status(201).json(com) )
+        .catch(e => res.status(500).json(e))
+    })
     .catch(e => res.status(500).json(e))
 }
 

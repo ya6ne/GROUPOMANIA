@@ -8,6 +8,7 @@ module.exports = (req, res, next) => {
       const userId = decodedToken.userId;
       db.Comment.findOne({where : { id : req.body.id}})
       .then( data => {
+        console.log(req.body , data)
         if(data.userId == userId){
           next()
         } else {
