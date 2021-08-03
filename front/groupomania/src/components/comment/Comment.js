@@ -16,10 +16,17 @@ function Comment({postId}){
     const config = {
            headers: {'Authorization': `Bearer ${mytoken}` }
        };
-    const onSubmit = coms => {
-        coms.PostId = postId
-        axios.post(process.env.REACT_APP_COMMENTS, coms, config)
-        .then(res => {reset()}) /* effacer le contenue du form */
+    const onSubmit = com => {
+        com.PostId = postId
+        axios.post(process.env.REACT_APP_COMMENTS, com, config)
+        .then(res => {
+            reset();
+            let newComs = [...coms];
+            console.log(newComs, res.data)
+            newComs.push(res.data);
+            setComs(newComs);
+        
+        }) /* effacer le contenue du form */
         .catch(err => console.log(err))
         
         
@@ -43,7 +50,11 @@ function Comment({postId}){
         .catch(e => console.log(e))
     }, [])
 
-    
+   const deleteComs = comId => {
+       let newComs = [...coms]
+       newComs = newComs.filter(x => x.id != comId)
+       setComs(newComs)
+   } 
     
 
 
@@ -60,8 +71,8 @@ function Comment({postId}){
                             coms && coms.map(x => (
                                 <div key={x.id}>
                                     {postId == x.postId ? (<div className="comment">
-                                    {id == x.userId ? <div className="date"><Delcom comId={x.id} /></div> : false}
-                                        <h6 className="auth">{x.User.firstname + ' '+ x.User.lastname +' ' + ':'}</h6>
+                                    {id == x.userId ? <div className="date"><Delcom comId={x.id} deleteComs={deleteComs} /></div> : false}
+                                        <h6 className="auth">{x.User?.firstname + ' '+ x.User?.lastname +' ' + ':'}</h6>
                                     <p>{x.content} <br></br>
                                     <span className="date">posté le {x.createdAt.split('T')[0].split('.')[0]} à {x.createdAt.split('T')[1].split('.')[0]}</span>
                                     </p>

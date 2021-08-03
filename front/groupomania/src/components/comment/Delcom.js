@@ -1,14 +1,17 @@
 import axios from 'axios';
 
 
-function Delcom({comId}){
+function Delcom({comId , deleteComs}){
+    console.log(comId)
     let mytoken = localStorage.getItem('token');
     const config = {
         headers: {'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${mytoken}` }
     };
     const delCom = () => {
         axios.delete(process.env.REACT_APP_COMMENTS,{data: {id:comId}, headers: {'Authorization': `Bearer ${mytoken}` } })
-            .then(data =>  {console.log(data)})
+            .then(data =>  {
+                deleteComs(comId)
+            })
             .catch(e => { console.log(e)})
         }
 

@@ -7,8 +7,11 @@ import Deletepost from '../post/Deletepost';
 
 function Welcome(props) {
     const [item,setItem] = useState();
+    const [delItem,updateDelitem] = useState(0);
     let mytoken = localStorage.getItem('token');
     let id = localStorage.getItem('id');
+ 
+    
 
     useEffect(() => {
         axios.get(process.env.REACT_APP_POSTS, {
@@ -20,7 +23,7 @@ function Welcome(props) {
             setItem(data.data);
         })
         .catch(e => console.log(e))
-    }, [])
+    }, [delItem])
   
     return (
         <div className="container">
@@ -40,7 +43,7 @@ function Welcome(props) {
                             <img className="card-img-top" src={x.attachement} alt="Card image cap"></img>
                             <p>posté par <a href={"mailto:" + x.User.email}>{x.User.firstname} {x.User.lastname}</a></p>
                             {
-                                id == x.userId && (<Deletepost postId={x.id} props={props}/>)
+                                id == x.userId && (<Deletepost  postId={x.id} props={props} delItem={delItem} updateDelitem={updateDelitem} />)
                             }
                             <Comment postId={x.id} props={props} />
 

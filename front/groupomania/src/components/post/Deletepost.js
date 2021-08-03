@@ -1,6 +1,9 @@
 import axios from 'axios';
+import {useState} from 'react'
 
-function Deletepost({postId}) {
+function Deletepost({postId, delItem , updateDelitem}) {
+    const [list, updateList] = useState();
+    
     console.log(postId)
     let mytoken = localStorage.getItem('token');
     console.log(mytoken)
@@ -10,11 +13,9 @@ function Deletepost({postId}) {
     const post = () => {
         console.log(postId)
         axios.delete(process.env.REACT_APP_POSTS,{ data:{postId} ,headers: {'Authorization': `Bearer ${mytoken}` }})
-            .then(data =>  {window.location.reload()})
-            .catch(e => { console.log(e)}) 
+        .then(data =>  {updateDelitem(delItem + 1)})
+        .catch(e => {console.log(e)}) 
     }
-
-
 
     return (
         <div>
