@@ -6,7 +6,6 @@ import Deleteprofil from './Deleteprofil';
 
 function Editprofil(props){
     let firstname = localStorage.getItem("firstname");
-    let userPhoto = localStorage.getItem("userPhoto");
     let lastname = localStorage.getItem("lastname");
     let mytoken = localStorage.getItem('token');
     

@@ -25,17 +25,11 @@ function Comment({postId}){
             console.log(newComs, res.data)
             newComs.push(res.data);
             setComs(newComs);
-        
         }) /* effacer le contenue du form */
-        .catch(err => console.log(err))
-        
-        
-        
+        .catch(err => console.log(err))   
     }
-    
     let numbofcoms = []
-    coms && numbofcoms.push(coms.filter(x => x.postId === postId).length)
-    
+    coms && numbofcoms.push(coms.filter(x => x.postId === postId).length) 
     useEffect(() => {
         axios.get(process.env.REACT_APP_COMMENTS, {
             headers:{
@@ -43,9 +37,7 @@ function Comment({postId}){
             }
         })
         .then(data => {
-            setComs(data.data);
-            
-            
+            setComs(data.data);  
         })
         .catch(e => console.log(e))
     }, [])
