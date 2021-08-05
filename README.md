@@ -25,6 +25,6 @@ I have created a corporate social network, for a fictive company. For this proje
 
 For the server : Node.js and Express framework</br>
 For the database : MySQL language and Sequelize ORM</br>
-For the frontend : Vue.js (Vue Router, Vuex), Sass, Bootsrap and BootsrapVue
+For the frontend : ReactJs and bootstrap
 
 
