@@ -11,7 +11,7 @@ function Profil({props}){
         firstname ? <div className="mt-3 card profil">
         <div className="flexprofil">
             <div className='imgcroper  mt-3'>
-                <img className="imgProfil" alt='profil' src={userPhoto}></img>
+                <img className="imgProfil" alt='profil' src={userPhoto} alt=""></img>
             </div>
             <h5 className="name">Bonjour {firstname} {lastname}</h5>
         </div>
