@@ -50,7 +50,7 @@ function Post(props) {
                             <input className="form-control" type="file" {...register("attachement", { required: false })} id="formFile"></input>
                         </div>
                         <div style={{color: "red",fontFamily: "Arial"}}>{error && error}</div>
-                        <button type="submit" className="btn btn-primary mt-3">Poster</button>
+                        <button type="submit" className="btn btn-dark mt-3">Poster</button>
                     </form>
                 </div>
             </div>

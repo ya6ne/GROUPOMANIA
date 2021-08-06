@@ -54,7 +54,7 @@ function Comment({postId}){
         
         
         <div>
-            <button onClick={isOpen ? () => setIsOpen(false) : () => setIsOpen(true)} className="btn btn-primary mr-2 mt-2">Commenter ({numbofcoms}) </button>
+            <button onClick={isOpen ? () => setIsOpen(false) : () => setIsOpen(true)} className="btn btn-dark mr-2 mt-2">Commenter ({numbofcoms}) </button>
         {   
             isOpen ? 
                 <form onSubmit={handleSubmit(onSubmit)}>

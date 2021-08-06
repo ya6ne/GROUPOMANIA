@@ -38,10 +38,10 @@ function Welcome(props) {
                 <div key={x.id}>
                     <div className="card mt-3" >
                         <div className="card-body"> 
-                            <h6 className="card-title" style={{color:"#ee2e05"}}>{x.title} </h6>
+                            <h6 className="card-title" style={{color:"black"}}>{x.title} </h6>
                             <p className="card-text">{x.content}.</p>
                             <img className="card-img-top" src={x.attachement} alt="Card image cap"></img>
-                            <p>posté par <a href={"mailto:" + x.User.email}>{x.User.firstname} {x.User.lastname}</a></p>
+                            <p>posté par <a style={{color: "black"}} href={"mailto:" + x.User.email}>{x.User.firstname} {x.User.lastname}</a></p>
                             {
                                 id == x.userId && (<Deletepost  postId={x.id} props={props} delItem={delItem} updateDelitem={updateDelitem} />)
                             }
