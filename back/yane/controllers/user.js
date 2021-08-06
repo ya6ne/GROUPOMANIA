@@ -3,11 +3,15 @@ const jwt = require('jsonwebtoken');
 var db = require('../models');
 var reg = require('../regex');
 const fs = require('fs');
+var CryptoJS = require("crypto-js");
+var key = CryptoJS.enc.Hex.parse("000102030405060708090a0b0c0d0e0f"); /* variable d'envirenement */
+var iv = CryptoJS.enc.Hex.parse("101112131415161718191a1b1c1d1e1f");
 
 
 exports.signup = (req, res, next) => {
   const user = JSON.parse(req.body.user)
   delete user.userPhoto;
+  var cryptedMail = CryptoJS.AES.encrypt(user.email, key, { iv: iv }).toString();
   /* ****************************************************** */ 
   if(!user.email){
     return res.status(400).json({ 'error': 'Attention: veuillez renseigner votre email' });
@@ -41,6 +45,7 @@ exports.signup = (req, res, next) => {
       db.User.create({
         isAdmin: 0,
         ...user,
+        email:cryptedMail,
         password: hash,
         userPhoto:`${req.protocol}://${req.get("host")}/images/${req.file.filename}`
       })
@@ -68,6 +73,8 @@ exports.signup = (req, res, next) => {
 
   exports.login = (req, res, next) => {
     /* ****************************************************** */
+    var cryptedMail = CryptoJS.AES.encrypt(req.body.email, key, { iv: iv }).toString();
+    
     if(!req.body.email){
       return res.status(400).json({ 'error': 'Attention: veuillez renseigner votre email' });
     }
@@ -81,7 +88,7 @@ exports.signup = (req, res, next) => {
       return res.status(400).json({ 'error': 'Attention: le mot de passe doit être de 8 caractères minimum et doit contenir au moins 1 majuscule 1 minuscule 1 chiffre 1 caractère spécial' });
     }
     /* ****************************************************** */
-    db.User.findOne({where : { email: req.body.email}})
+    db.User.findOne({where : { email: cryptedMail}})
     .then( user => {
       if (!user) {
         return res.status(401).json({ error: 'Attention: Utilisateur non trouvé !' });

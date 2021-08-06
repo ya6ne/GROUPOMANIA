@@ -1,9 +1,8 @@
 const multer = require('multer'); /* multer for userPhoto */
 
 const MIME_TYPES = {
-  'image/jpg': 'jpg',
-  'image/jpeg': 'jpg',
-  'image/png': 'png'
+  'image/gif': 'gif'
+
 };
 
 const storage = multer.diskStorage({
